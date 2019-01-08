@@ -1,0 +1,109 @@
+<div id="pag">
+<div class="row">
+
+    {% for i in page.object_list  %}
+         <div class="col-md-4"></div>
+    <div class="card container-fluid col-md-4" style="margin: 30px; width: 18rem; padding-bottom: 10px">
+  <img src="{{ i.image.url }}" class="card-img-top" style="margin-top: 10px;">
+  <div class="card-body">
+      <p class="card-text">{{ i.title }}</p>
+    <p class="card-text">{{ i.contents }}</p>
+  </div>
+     <div class="col-md-4"></div>
+  </div>
+{% endfor %}
+</div>
+
+<div class="row" style="margin-top: 30px">
+    <div class="col-md-5"></div>
+    <div class="my_card col-md-1 container-fluid">
+     <nav aria-label="...">
+  <ul class="pagination">
+  {% if page.has_previous %}
+  <li class="page-item" >
+      <a id="prev" class="page-link" href="#">Previous</a>
+    </li>
+  {% endif %}
+      {% for n in page.paginator.page_range %}
+          {% if page.number == n %}
+              <li class="page-item active" aria-current="page">
+         <a class="page-link" href="#">{{ n }} <span class="sr-only">(current)</span></a>
+        </li>
+          {% elif n > page.number|add:-2 and n < page.number|add:2 %}
+          <li class="page-item page_number"><a class="page-link" href="#">{{ n }}</a></li>
+          {% endif %}
+
+      {% endfor %}
+
+
+    {% if page.has_next %}
+    <li class="page-item" >
+      <a id="next" class="page-link" href="#">Next</a>
+    </li>
+  {% endif %}
+  </ul>
+    </nav>
+</div>
+</div>
+</div>
+
+
+
+<script>
+    var page_num;
+     $(document).ready(function(){
+         $(".page_number").bind("click", function () {
+             page_num = Number($(this).text());
+            $.ajax(
+                {
+                    url: "/posts",
+                    type: "GET",
+                    data: {'page': Number($(this).text())} ,
+                    dataType: "html",
+
+                    success: function(data){
+                        $('#pag').html(data)
+                    }
+                }
+            )
+
+        })
+    })
+     $(document).ready(function(){
+         $("#next").bind("click", function () {
+             page_num++;
+            $.ajax(
+                {
+                    url: "/posts",
+                    type: "GET",
+                    data: {'page': page_num} ,
+                    dataType: "html",
+
+                    success: function(data){
+                        $('#pag').html(data)
+                    }
+                }
+            )
+
+        })
+    })
+    $(document).ready(function(){
+         $("#prev").bind("click", function () {
+             page_num--;
+            $.ajax(
+                {
+                    url: "/posts",
+                    type: "GET",
+                    data: {'page': page_num} ,
+                    dataType: "html",
+
+                    success: function(data){
+                        $('#pag').html(data)
+                    }
+                }
+            )
+
+        })
+    })
+</script>
+

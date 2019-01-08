@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block style%}
+.login {
+    margin: 20px;
+}
+.two {
+    height: 100%;
+}
+.button {
+    margin: 20px;
+    }
+.header {
+    color: white;
+    }
+.field {
+    padding: 20px;
+    padding-right: 100px;
+    }
+.butt {
+    margin: 20px
+    }
+{% endblock %}
+}
+
+{% block users%}
+<div class="row two">
+    <div class="col-md-9" style="background-color: azure">
+        <form action="{% url 'new_user_url' %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.errors %}
+                <div class="alert alert-danger">
+                {{ field.errors }}
+                </div>
+                {% endif %}
+                <div class="field">
+                {{ field.label }}
+                {{ field }}
+                </div>
+
+            {% endfor %}
+        <div class=" butt">
+            <button type="submit" class="btn btn-primary">регистрация</button>
+        </div>
+
+        </form>
+    </div>
+    <div class="col-md-3" style="background-color: black">
+        <div class="container"><h1 class="header">Welcome!!</h1></div>
+        <div class="container"><h1 class="header">я надеюсь вам понравиться наш проект!</h1></div>
+    </div>
+</div>
+
+{% endblock %}

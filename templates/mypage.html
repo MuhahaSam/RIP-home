@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block style %}
+    .my_card {
+        height: 30%;
+        margin: 30px;
+    }
+{% endblock %}
+
+{% block navigation %}
+    <ul class="nav justify-content-end">
+    <a id="posts" class="nav-link active" href="#">Посты</a>
+    <a id = 'upload' class="nav-link" href="#"> Выложить пост</a>
+    <a id="my_posts" class="nav-link" href="#">Мои посты</a>
+        <a class="nav-link" href="{% url 'logout' %}">выйти</a>
+    </ul>
+
+{% endblock %}
+
+
+{% block users %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script>
+    //'/upload'
+    $(document).ready(function(){
+        $("#upload").bind("click", function () {
+            $.ajax(
+                {
+                    url: "/upload2",
+                    type: "GET",
+                    data: 0,
+                    dataType: "html",
+                    success: function(data){
+                        $('#uploads').html(data)
+                    }
+                }
+            )
+            
+        })
+    })
+    </script>
+    <script>
+    $(document).ready(function(){
+         $("#posts").bind("click", function () {
+            $.ajax(
+                {
+                    url: "/posts",
+                    type: "GET",
+                    data: 0,
+                    dataType: "html",
+                    success: function(data){
+                        $('#uploads').html(data)
+                    }
+                }
+            )
+
+        })
+    })
+     $(document).ready(function(){
+         $("#my_posts").bind("click", function () {
+            $.ajax(
+                {
+                    url: "/my_posts",
+                    type: "GET",
+                    data: 0,
+                    dataType: "html",
+                    success: function(data){
+                        $('#uploads').html(data)
+                    }
+                }
+            )
+
+        })
+    })
+    </script>
+    <div id="uploads" >
+        <div class="card">
+     <div class="card-body">
+    <h5 class="card-title">ДЗ по рипу</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Привет это мой домашний проект, надеюсь он вам понравиться</h6>
+    <p class="card-text">Здесь вы можетет выкладывать свои посты и смотреть на чужие.</p>
+         <p class="card-text">Используйте навигацию сверху чтобы увидеть их</p>
+     </div>
+</div>
+    </div>
+
+
+{% endblock %}
